@@ -80,6 +80,20 @@
             color: #1976d2;  /* Darker blue on hover */
             text-decoration: underline;
         }
+        .error-msg {
+            color: #d32f2f;
+            background-color: #fde8e8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 14px;
+            border: 1px solid #f8b4b4;
+        }
+        .field-error {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -87,10 +101,25 @@
         <h2>Login</h2>
         <form method="post">
             {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="error-msg">
+                {% for error in form.non_field_errors %}
+                    <p style="margin: 0;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
             {% for field in form %}
             <div class="form-group">
                 <label>{{ field.label }}</label>
                 {{ field }}
+                {% if field.errors %}
+                <div class="field-error">
+                    {% for error in field.errors %}
+                        <p style="margin: 0;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
             <button type="submit">Login</button>
