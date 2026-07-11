@@ -20,3 +20,7 @@ env/
 *.njsproj
 *.sln
 *.sw?
+
+# Media uploads and collected static files
+media/
+staticfiles/
