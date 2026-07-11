@@ -12,7 +12,7 @@ def _load_sentence_transformer():
         model = SentenceTransformer('all-MiniLM-L6-v2')
         return model, util
     except Exception as e:
-        print('⚠️ sentence-transformers unavailable:', e)
+        print('[WARNING] sentence-transformers unavailable:', e)
         return None, None
 
 
@@ -35,7 +35,7 @@ def extract_text_from_resume(file_path):
         else:
             raise ValueError("Unsupported file format")
     except Exception as e:
-        print("❌ Resume parsing error:", e)
+        print("[ERROR] Resume parsing error:", e)
         return ""
 
     # Clean whitespace
@@ -53,7 +53,7 @@ def check_eligibility_and_score(resume_text, job_description):
 
     model, util = _load_sentence_transformer()
     if model is None or util is None:
-        print("⚠️ BERT similarity skipped because sentence-transformers is unavailable.")
+        print("[WARNING] BERT similarity skipped because sentence-transformers is unavailable.")
         return False, 0.0
 
     try:
@@ -69,11 +69,11 @@ def check_eligibility_and_score(resume_text, job_description):
         # Eligibility threshold
         eligible = score >= 40
 
-        print(f"✅ BERT Score: {score}% | Eligible: {eligible}")
+        print(f"BERT Score: {score}% | Eligible: {eligible}")
         return eligible, score
 
     except Exception as e:
-        print("❌ BERT similarity error:", e)
+        print("[ERROR] BERT similarity error:", e)
         return False, 0.0
 
 
