@@ -4,10 +4,17 @@ import os
 import re
 import fitz  # PyMuPDF
 import docx
-from sentence_transformers import SentenceTransformer, util
 
-# Load BERT model once
-model = SentenceTransformer('all-MiniLM-L6-v2')
+
+def _load_sentence_transformer():
+    try:
+        from sentence_transformers import SentenceTransformer, util
+        model = SentenceTransformer('all-MiniLM-L6-v2')
+        return model, util
+    except Exception as e:
+        print('⚠️ sentence-transformers unavailable:', e)
+        return None, None
+
 
 # ---------------------------
 # 1. Extract Text from Resume
@@ -39,8 +46,14 @@ def extract_text_from_resume(file_path):
 # ---------------------------
 # 2. BERT Similarity Matching
 # ---------------------------
+
 def check_eligibility_and_score(resume_text, job_description):
     if not resume_text or not job_description:
+        return False, 0.0
+
+    model, util = _load_sentence_transformer()
+    if model is None or util is None:
+        print("⚠️ BERT similarity skipped because sentence-transformers is unavailable.")
         return False, 0.0
 
     try:

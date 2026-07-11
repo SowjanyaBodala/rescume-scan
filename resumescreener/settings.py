@@ -20,12 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#8s&p_b(j#z@5j3-7_$+8erq9%n(amb7ms&udyr10=9t9t%_lp'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-#8s&p_b(j#z@5j3-7_$+8erq9%n(amb7ms&udyr10=9t9t%_lp',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
@@ -74,16 +77,26 @@ WSGI_APPLICATION = 'resumescreener.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'resume_db',  # Your database name
-        'USER': 'resume_user',  # Your PostgreSQL username
-        'PASSWORD': 'resume_pass',  # Your PostgreSQL password
-        'HOST': '127.0.0.1',  # Keep as localhost
-        'PORT': '5432',  # Default PostgreSQL port
+# Database
+# By default use SQLite for easy local runs. To force PostgreSQL set USE_SQLITE=0
+if os.environ.get('USE_SQLITE', '1') == '1':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(BASE_DIR / 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'resume_db',  # Your database name
+            'USER': 'resume_user',  # Your PostgreSQL username
+            'PASSWORD': 'resume_pass',  # Your PostgreSQL password
+            'HOST': '127.0.0.1',  # Keep as localhost
+            'PORT': '5432',  # Default PostgreSQL port
+        }
+    }
 
 
 

@@ -1,0 +1,13 @@
+[tool.pyrefly]
+python-interpreter-path = "C:\\Users\\sowja\\OneDrive\\Desktop\\Projects\\ResumeScreener\\venv\\Scripts\\python.exe"
+project-excludes = ["**/.*", "**/*venv/**", "**/_pyrefly_virtual_/**", "**/C:\\_pyrefly_virtual_\\inmemory/**"]
+
+[tool.pyrefly.errors]
+untyped-import = false
+missing-import = false
+parse-error = false
+unknown-name = false
+invalid-syntax = false
+bad-override = false
+no-matching-overload = false
+missing-attribute = false
