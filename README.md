@@ -1,6 +1,6 @@
 # ResuMatch — AI-Powered Resume Screener
 
-**Live Application**: [https://resume-scan-5.onrender.com/](https://resume-scan-5.onrender.com/)
+**Live Application**: [https://rescume-scan-5.onrender.com/](https://rescume-scan-5.onrender.com/)
 
 ResuMatch is a modern, AI-powered web application designed to automate and streamline the resume screening process for recruitment teams and job applicants. By leveraging Natural Language Processing (NLP) and Machine Learning (ML), the platform evaluates candidate resumes against job descriptions to predict suitability, detect fraud, calculate compatibility scores, and offer feedback for career improvement.
 
